@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+/* Smooth fonts and nicer defaults */
+:root {
+	color-scheme: dark;
+}
+
+html, body, #root {
+	height: 100%;
+	height: 100vh;
+	height: 100dvh; /* Dynamic viewport height for mobile browsers */
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar hiding utility */
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+
+/* Mobile touch scroll improvements */
+.overflow-x-auto {
+	-webkit-overflow-scrolling: touch;
+}
+
+/* Text overflow handling */
+.text-overflow-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.word-break-all {
+	word-break: break-all;
+}
+
+.break-words {
+	word-wrap: break-word;
+	word-break: break-word;
+}
+
+/* Mobile-optimized containers */
+.mobile-container {
+	max-width: 100vw;
+	overflow-x: hidden;
+	padding: 0 1rem;
+}
+
+/* Full height sidebar utility */
+.sidebar-full-height {
+	height: 100vh;
+	height: 100dvh; /* Dynamic viewport height for mobile browsers */
+	min-height: 100vh;
+	min-height: 100dvh;
+}
+
+.mobile-card {
+	min-width: 0;
+	word-wrap: break-word;
+}
+
+/* Responsive chart improvements */
+@media (max-width: 640px) {
+	.mobile-chart .recharts-text {
+		font-size: 10px !important;
+	}
+	
+	.mobile-chart .recharts-cartesian-axis-tick-value {
+		font-size: 10px !important;
+	}
+	
+	.mobile-chart .recharts-label {
+		font-size: 10px !important;
+	}
+}
