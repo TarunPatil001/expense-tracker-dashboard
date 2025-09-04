@@ -1,18 +1,15 @@
 import React, { memo, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { Home, PieChart, Settings, Plus, ChevronLeft, ChevronRight, X, Menu } from 'lucide-react'
-import { toggleModal } from '../store/expenseManagerSlice'
+import { Home, PieChart, Settings, ChevronLeft, ChevronRight, X, Menu } from 'lucide-react'
 import { useSidebar } from '../hooks/useSidebarStore.jsx'
 
 // Memoize menu items to prevent recreation on every render
 const menuItems = [
-  { icon: Home, id: 'expenses', to: '/', label: 'Expenses' },
+  { icon: Home, id: 'dashboard', to: '/', label: 'Dashboard' },
   { icon: PieChart, id: 'analytics', to: '/analytics', label: 'Analytics' }
 ]
 
 const Sidebar = memo(({ onSettingsClick }) => {
-  const dispatch = useDispatch()
   const { isExpanded, toggleSidebar, setIsExpanded } = useSidebar()
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
@@ -136,20 +133,6 @@ const Sidebar = memo(({ onSettingsClick }) => {
             {isExpanded ? <ChevronLeft className="w-3 md:w-4 h-3 md:h-4" /> : <ChevronRight className="w-3 md:w-4 h-3 md:h-4" />}
           </button>
         </div>
-        
-        {/* Add Expense Button */}
-        <button 
-          onClick={() => {
-            dispatch(toggleModal('showExpenseModal'))
-            handleNavClick()
-          }}
-          className={`${isExpanded ? 'w-full justify-start px-3 md:px-4' : 'w-10 md:w-12 justify-center'} h-10 md:h-12 rounded-lg md:rounded-xl bg-orange-500 hover:bg-orange-600 flex items-center text-white transition-all duration-300 shadow-lg hover:shadow-orange-500/25 gap-2 md:gap-3`}
-        >
-          <Plus className="w-4 md:w-5 h-4 md:h-5 flex-shrink-0" />
-          {showText && (
-            <span className="font-medium whitespace-nowrap overflow-hidden text-sm md:text-base">Add Expense</span>
-          )}
-        </button>
         
         {/* Navigation */}
         <nav className="flex flex-col gap-2 md:gap-3 mt-2">

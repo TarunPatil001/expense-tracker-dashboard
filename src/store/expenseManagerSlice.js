@@ -223,6 +223,18 @@ if (savedData && isValidStateStructure(savedData)) {
     preferences: {
       ...getFreshInitialState().preferences, // Ensure all preference defaults
       ...savedData.preferences // Override with saved preferences
+    },
+    ui: {
+      ...getFreshInitialState().ui, // Start with fresh UI defaults
+      ...savedData.ui, // Override with saved UI state
+      // Force all modals to be closed on app load
+      showExpenseModal: false,
+      showCategoryModal: false,
+      showBudgetModal: false,
+      showGoalModal: false,
+      showSettingsModal: false,
+      showNotificationModal: false,
+      editingTransaction: null
     }
   }
   

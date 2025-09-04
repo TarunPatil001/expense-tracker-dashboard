@@ -180,7 +180,7 @@ const SmartBudgetAdvisor = () => {
           <Brain className="w-5 h-5 text-purple-400" />
         </div>
         <div>
-          <h3 className="text-white font-semibold">AI Budget Advisor</h3>
+          <h3 className="text-white font-semibold">Smart Budget Advisor</h3>
           <p className="text-gray-400 text-sm">Personalized insights based on your spending</p>
         </div>
       </div>
@@ -221,7 +221,7 @@ const SmartBudgetAdvisor = () => {
           <span className="text-white font-medium text-sm">Pro Tip</span>
         </div>
         <p className="text-gray-300 text-sm">
-          The more you use the app, the better our AI gets at providing personalized advice. 
+          The more you use the app, the better our analytics become at providing personalized advice. 
           Keep tracking your expenses for increasingly accurate insights!
         </p>
       </div>

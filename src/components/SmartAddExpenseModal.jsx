@@ -267,7 +267,7 @@ const SmartAddExpenseModal = ({ isOpen, onClose, editingTransaction: propEditing
               {isEditing ? 'Edit Expense' : 'Smart Add Expense'}
             </h2>
             <p className="text-gray-400 text-sm mt-1">
-              {isEditing ? 'Update your expense details' : 'AI-powered expense tracking'}
+              {isEditing ? 'Update your expense details' : 'Smart expense tracking'}
             </p>
           </div>
           <button

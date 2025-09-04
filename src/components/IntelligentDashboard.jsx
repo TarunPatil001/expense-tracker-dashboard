@@ -4,10 +4,11 @@ import { Brain, TrendingUp, Eye, EyeOff, Settings, Zap, Activity, GraduationCap 
 import SmartBudgetRebalancer from './SmartBudgetRebalancer'
 import SmartBudgetAdvisor from './SmartBudgetAdvisor'
 import IntelligentAnalytics from './IntelligentAnalytics'
-import AIInsightsEngine from './AIInsightsEngine'
+import SmartInsightsEngine from './SmartInsightsEngine'
 import SmartLearningAssistant from './SmartLearningAssistant'
 import PredictiveAnalytics from './PredictiveAnalytics'
 import SmartAddExpenseModal from './SmartAddExpenseModal'
+import { scrollToTop } from '../utils/scrollUtils'
 
 const IntelligentDashboard = () => {
   const { transactions = [], budget = {}, categories = [] } = useSelector(state => state.expenseManager || {})
@@ -75,19 +76,19 @@ const IntelligentDashboard = () => {
   }, [transactions, budget, categories])
 
   const getIntelligenceLevel = (score) => {
-    if (score >= 90) return { level: 'AI Master', color: 'purple', desc: 'Maximum intelligence unlocked' }
-    if (score >= 75) return { level: 'Expert', color: 'green', desc: 'Advanced AI insights available' }
-    if (score >= 60) return { level: 'Advanced', color: 'blue', desc: 'Most AI features unlocked' }
-    if (score >= 40) return { level: 'Intermediate', color: 'yellow', desc: 'Good AI capabilities' }
-    if (score >= 20) return { level: 'Beginner', color: 'orange', desc: 'Basic AI insights' }
+    if (score >= 90) return { level: 'Analytics Master', color: 'purple', desc: 'Maximum intelligence unlocked' }
+    if (score >= 75) return { level: 'Expert', color: 'green', desc: 'Advanced smart insights available' }
+    if (score >= 60) return { level: 'Advanced', color: 'blue', desc: 'Most smart features unlocked' }
+    if (score >= 40) return { level: 'Intermediate', color: 'yellow', desc: 'Good analytics capabilities' }
+    if (score >= 20) return { level: 'Beginner', color: 'orange', desc: 'Basic smart insights' }
     return { level: 'Learning', color: 'red', desc: 'Building intelligence' }
   }
 
   const intelligence = getIntelligenceLevel(intelligenceScore)
 
   const tabs = [
-    { id: 'advisor', label: 'AI Advisor', icon: Brain, component: SmartBudgetAdvisor },
-    { id: 'insights', label: 'AI Insights', icon: Activity, component: AIInsightsEngine },
+    { id: 'advisor', label: 'Smart Advisor', icon: Brain, component: SmartBudgetAdvisor },
+    { id: 'insights', label: 'Smart Insights', icon: Activity, component: SmartInsightsEngine },
     { id: 'predictions', label: 'Predictions', icon: TrendingUp, component: PredictiveAnalytics },
     { id: 'learning', label: 'Learning', icon: GraduationCap, component: SmartLearningAssistant },
     { id: 'rebalancer', label: 'Rebalancer', icon: Zap, component: SmartBudgetRebalancer },
@@ -118,7 +119,7 @@ const IntelligentDashboard = () => {
                 <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
               <div className="min-w-0">
-                <h2 className="text-white font-semibold text-base sm:text-lg">AI-Powered Intelligence</h2>
+                <h2 className="text-white font-semibold text-base sm:text-lg">Smart Intelligence</h2>
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 bg-${intelligence.color}-400 rounded-full animate-pulse`}></div>
                   <span className={`text-${intelligence.color}-400 text-xs sm:text-sm font-medium`}>
@@ -148,7 +149,7 @@ const IntelligentDashboard = () => {
           {/* Intelligence Progress Bar */}
           <div className="mt-3">
             <div className="flex justify-between items-center mb-1">
-              <span className="text-xs text-gray-400">AI Intelligence Progress</span>
+              <span className="text-xs text-gray-400">Smart Intelligence Progress</span>
               <span className="text-xs text-gray-400">{intelligence.desc}</span>
             </div>
             <div className="w-full bg-gray-800 rounded-full h-2">
@@ -168,7 +169,11 @@ const IntelligentDashboard = () => {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => {
+                    setActiveTab(tab.id)
+                    // Scroll to top when tab changes
+                    scrollToTop()
+                  }}
                   className={`flex-shrink-0 flex items-center justify-center gap-2 px-3 sm:px-4 py-3 text-xs sm:text-sm font-medium transition-colors relative ${
                     activeTab === tab.id
                       ? 'text-white bg-gray-800/50'
@@ -207,7 +212,7 @@ const IntelligentDashboard = () => {
             <div className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5" />
               <div>
-                <h4 className="text-white font-medium mb-1">Boost Your AI Intelligence Level</h4>
+                <h4 className="text-white font-medium mb-1">Boost Your Intelligence Level</h4>
                 <div className="text-gray-400 text-sm space-y-1">
                   {transactions.length < 20 && (
                     <p>• Add more transactions to unlock behavioral analysis</p>
@@ -228,7 +233,7 @@ const IntelligentDashboard = () => {
                     <p>• Use diverse payment methods for comprehensive tracking</p>
                   )}
                   {intelligenceScore >= 60 && (
-                    <p>• Complete learning lessons to unlock AI Master level</p>
+                    <p>• Complete learning lessons to unlock Analytics Master level</p>
                   )}
                 </div>
               </div>

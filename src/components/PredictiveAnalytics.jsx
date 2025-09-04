@@ -255,7 +255,7 @@ const PredictiveAnalytics = () => {
         </div>
         <div>
           <h3 className="text-white font-semibold">Predictive Analytics</h3>
-          <p className="text-gray-400 text-sm">AI-powered spending forecasts</p>
+          <p className="text-gray-400 text-sm">Statistical spending forecasts</p>
         </div>
         <div className="ml-auto flex items-center gap-2">
           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
@@ -375,7 +375,7 @@ const PredictiveAnalytics = () => {
         <div>
           <h4 className="text-white font-medium mb-3 flex items-center gap-2">
             <BarChart3 className="w-4 h-4 text-purple-400" />
-            AI Recommendations
+            Smart Recommendations
           </h4>
           <div className="space-y-2">
             {predictions.recommendations.map((rec, index) => (

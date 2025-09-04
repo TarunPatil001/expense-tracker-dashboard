@@ -6,7 +6,8 @@ import { Toaster } from 'react-hot-toast'
 import Sidebar from './components/Sidebar'
 import SetupWizard from './components/SetupWizard'
 import Settings from './components/Settings'
-import ExpensesPage from './pages/ExpensesPage'
+import ScrollToTop from './components/ScrollToTop'
+import DashboardPage from './pages/DashboardPage'
 import AnalyticsPage from './pages/AnalyticsPage'
 import { SidebarProvider } from './hooks/useSidebarStore.jsx'
 
@@ -30,8 +31,9 @@ function Shell() {
   return (
     <div className="h-screen min-h-screen bg-[#0b0b0c] text-gray-200 font-sans">
       <Sidebar onSettingsClick={() => setShowSettings(true)} />
+      <ScrollToTop />
       <Routes>
-        <Route path="/" element={<ExpensesPage />} />
+        <Route path="/" element={<DashboardPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

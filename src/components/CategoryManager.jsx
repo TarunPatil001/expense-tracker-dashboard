@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Plus, Edit2, Trash2, X, Check } from 'lucide-react'
 import { addCategory, updateCategory, deleteCategory, toggleModal } from '../store/expenseManagerSlice'
+import { getNextAvailableColor } from '../utils/autoColorAssignment'
 
 // CategoryManager component with arrow function approach
 const CategoryManager = (props) => {
@@ -28,14 +29,14 @@ const CategoryManager = (props) => {
 
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState(null)
-  const [form, setForm] = useState({ name: '', icon: '', color: '#FF6B6B', budget: '', description: '' })
+  const [form, setForm] = useState({ name: '', icon: '', budget: '', description: '' })
 
   const isOpen = propIsOpen !== undefined ? propIsOpen : ui.showCategoryModal
   const close = useCallback(() => {
     if (propOnClose) propOnClose(); else dispatch(toggleModal('showCategoryModal'))
     setShowForm(false)
     setEditing(null)
-    setForm({ name: '', icon: '', color: '#FF6B6B', budget: '', description: '' })
+    setForm({ name: '', icon: '', budget: '', description: '' })
   }, [propOnClose, dispatch])
 
   // Sync when external editing category is provided
@@ -45,7 +46,6 @@ const CategoryManager = (props) => {
       setForm({
         name: propEditing.name || '',
         icon: propEditing.icon || '',
-        color: propEditing.color || '#FF6B6B',
         budget: String(propEditing.budget ?? ''),
         description: propEditing.description || ''
       })
@@ -73,12 +73,6 @@ const CategoryManager = (props) => {
     '🐕','🐱','🐠','🐦','🌿','🦮',
     '💰','💳','🏦','📈','💸','🪙',
     '🎯','⭐','🎪','🎭','🎨','🎪'
-  ], [])
-
-  const availableColors = useMemo(() => [
-    '#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD',
-    '#FF8A80','#81C784','#64B5F6','#FFB74D','#F06292','#9575CD',
-    '#E57373','#4DB6AC','#7986CB','#FFD54F','#A1887F','#90A4AE'
   ], [])
 
   // Safer currency symbol with complete null safety
@@ -111,10 +105,14 @@ const CategoryManager = (props) => {
     e.preventDefault()
     const name = form.name.trim()
     if (!name || !form.icon) return
+    
+    // Auto-assign color for new categories
+    const autoColor = editing?.color || getNextAvailableColor(categories)
+    
     const payload = {
       name,
       icon: form.icon,
-      color: form.color || '#FF6B6B',
+      color: autoColor,
       budget: Number(form.budget) || 0,
       description: form.description?.trim() || ''
     }
@@ -125,7 +123,7 @@ const CategoryManager = (props) => {
     }
     setShowForm(false)
     setEditing(null)
-    setForm({ name: '', icon: '', color: '#FF6B6B', budget: '', description: '' })
+    setForm({ name: '', icon: '', budget: '', description: '' })
   }
 
   const onEdit = (cat) => {
@@ -133,7 +131,6 @@ const CategoryManager = (props) => {
     setForm({
       name: cat.name,
       icon: cat.icon,
-      color: cat.color,
       budget: String(cat.budget ?? ''),
       description: cat.description || ''
     })
@@ -174,7 +171,7 @@ const CategoryManager = (props) => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
                 <h3 className="text-lg font-semibold text-white">Your Categories</h3>
                 <button
-                  onClick={() => { setShowForm(true); setEditing(null); setForm({ name: '', icon: '', color: '#FF6B6B', budget: '', description: '' }) }}
+                  onClick={() => { setShowForm(true); setEditing(null); setForm({ name: '', icon: '', budget: '', description: '' }) }}
                   className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 text-white rounded-xl transition-all text-sm sm:text-base w-full sm:w-auto justify-center"
                 >
                   <Plus className="w-4 h-4" />
@@ -219,7 +216,7 @@ const CategoryManager = (props) => {
                     <h4 className="text-lg sm:text-xl font-semibold text-white mb-2">No categories yet</h4>
                     <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Create your first category to start organizing expenses</p>
                     <button
-                      onClick={() => { setShowForm(true); setEditing(null); setForm({ name: '', icon: '', color: '#FF6B6B', budget: '', description: '' }) }}
+                      onClick={() => { setShowForm(true); setEditing(null); setForm({ name: '', icon: '', budget: '', description: '' }) }}
                       className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 text-white rounded-xl transition-all font-medium text-sm sm:text-base"
                     >
                       <Plus className="w-4 h-4 inline mr-2" />
@@ -269,21 +266,6 @@ const CategoryManager = (props) => {
                         >
                           {ic}
                         </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">Choose Color</label>
-                    <div className="grid grid-cols-8 sm:grid-cols-6 gap-1.5 sm:gap-2">
-                      {availableColors.map((col, idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => setForm(prev => ({ ...prev, color: col }))}
-                          className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg transition-all hover:scale-110 ${form.color === col ? 'ring-2 ring-white' : ''}`}
-                          style={{ backgroundColor: col }}
-                        />
                       ))}
                     </div>
                   </div>

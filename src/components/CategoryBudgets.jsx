@@ -16,9 +16,9 @@ const CategoryBudgets = () => {
   }
 
   return (
-    <div className="bg-[#1a1a1b] rounded-2xl border border-gray-800 overflow-hidden">
+    <div className="bg-[#1a1a1b] rounded-2xl border border-gray-800 overflow-hidden flex flex-col">
       {/* Header Section */}
-      <div className="p-4 sm:p-5 border-b border-gray-800 bg-gradient-to-r from-[#1a1a1b] to-[#252527]">
+      <div className="p-4 sm:p-5 border-b border-gray-800 bg-gradient-to-r from-[#1a1a1b] to-[#252527] flex-shrink-0">
         {/* Desktop: Single row layout, Mobile: Stacked layout */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
           {/* Title section */}
@@ -59,18 +59,19 @@ const CategoryBudgets = () => {
       </div>
 
       {/* Categories List */}
-      <div className="p-4 sm:p-5">
-        {categories.length === 0 ? (
-          <div className="text-center py-8">
-            <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-700/50 flex items-center justify-center">
-              <Settings className="w-6 h-6 text-gray-400" />
+      <div className="p-4 sm:p-5 flex-1 min-h-0">
+        <div className="h-96 sm:h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 hover:scrollbar-thumb-gray-500">
+          {categories.length === 0 ? (
+            <div className="text-center py-8">
+              <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-700/50 flex items-center justify-center">
+                <Settings className="w-6 h-6 text-gray-400" />
+              </div>
+              <p className="text-gray-400 font-medium mb-1">No categories yet</p>
+              <p className="text-gray-500 text-xs">Create categories to track your budgets</p>
             </div>
-            <p className="text-gray-400 font-medium mb-1">No categories yet</p>
-            <p className="text-gray-500 text-xs">Create categories to track your budgets</p>
-          </div>
-        ) : (
-          <div className="space-y-4 sm:space-y-5">
-            {categories.map((category) => {
+          ) : (
+            <div className="space-y-4 sm:space-y-5">
+              {categories.map((category) => {
               const spent = getCategorySpent(category.id)
               const budget = category.budget || 0
               const percentage = budget > 0 ? (spent / budget) * 100 : 0
@@ -159,8 +160,9 @@ const CategoryBudgets = () => {
                 </div>
               )
             })}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

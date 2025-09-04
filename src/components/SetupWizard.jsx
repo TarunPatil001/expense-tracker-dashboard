@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { User, DollarSign, Target, Check, ArrowRight, ArrowLeft, Plus, X } from 'lucide-react'
 import { completeSetup } from '../store/expenseManagerSlice'
+import useDocumentTitle from '../hooks/useDocumentTitle'
+import { getNextAvailableColor } from '../utils/autoColorAssignment'
 
 const SetupWizard = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  
+  // Set page title
+  useDocumentTitle('Setup Wizard')
+  
   const [currentStep, setCurrentStep] = useState(1)
   const [profile, setProfile] = useState({
     name: '',
@@ -18,7 +26,6 @@ const SetupWizard = () => {
   const [newCategory, setNewCategory] = useState({
     name: '',
     icon: '',
-    color: '#FF6B6B',
     budget: ''
   })
 
@@ -36,10 +43,6 @@ const SetupWizard = () => {
     '💰', '💳', '🏦', '📈', '💸', '🪙'  // Finance
   ]
 
-  const availableColors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD',
-    '#FF8A80', '#81C784', '#64B5F6', '#FFB74D', '#F06292', '#9575CD'
-  ]
   const [categoryBudgets, setCategoryBudgets] = useState({})
 
   // Safe currency symbol function
@@ -64,17 +67,20 @@ const SetupWizard = () => {
   const addCustomCategory = () => {
     if (!newCategory.name || !newCategory.icon) return
     
+    // Auto-assign a unique color
+    const autoColor = getNextAvailableColor(customCategories)
+    
     const category = {
       id: Date.now(),
       name: newCategory.name,
       icon: newCategory.icon,
-      color: newCategory.color,
+      color: autoColor,
       budget: parseFloat(newCategory.budget) || 0
     }
     
     setCustomCategories(prev => [...prev, category])
     setCategoryBudgets(prev => ({ ...prev, [category.id]: newCategory.budget }))
-    setNewCategory({ name: '', icon: '', color: '#FF6B6B', budget: '' })
+    setNewCategory({ name: '', icon: '', budget: '' })
   // no-op; inline category form toggle removed
   }
 
@@ -107,6 +113,9 @@ const SetupWizard = () => {
     localStorage.setItem('expenseManagerSetup', JSON.stringify(setupData))
     
     dispatch(completeSetup(setupData))
+    
+    // Navigate to dashboard after setup completion
+    navigate('/')
   }
 
   const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 4))
@@ -300,23 +309,6 @@ const SetupWizard = () => {
                         >
                           {icon}
                         </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Color Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Choose Color</label>
-                    <div className="flex flex-wrap gap-2">
-                      {availableColors.map((color, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setNewCategory(prev => ({ ...prev, color }))}
-                          className={`w-8 h-8 rounded-full border-2 ${
-                            newCategory.color === color ? 'border-white' : 'border-gray-600'
-                          }`}
-                          style={{ backgroundColor: color }}
-                        />
                       ))}
                     </div>
                   </div>

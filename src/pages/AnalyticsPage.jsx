@@ -7,9 +7,13 @@ import CategoryManager from '../components/CategoryManager'
 import ModernAddExpenseModal from '../components/ModernAddExpenseModal'
 import ErrorBoundary from '../components/ErrorBoundary'
 import { useSidebar } from '../hooks/useSidebarStore.jsx'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 const AnalyticsPage = () => {
   const { isExpanded, toggleSidebar } = useSidebar()
+  
+  // Set page title
+  useDocumentTitle('Analytics')
   
   return (
     <div className="min-h-screen bg-[#0f0f10] text-white">
@@ -61,7 +65,7 @@ const AnalyticsPage = () => {
           </div>
         </div>
 
-        {/* AI-Powered Intelligence Dashboard */}
+        {/* Smart Intelligence Dashboard */}
         <div className="mt-2 sm:mt-4">
           <ErrorBoundary fallbackMessage="There was an error loading the intelligent dashboard">
             <IntelligentDashboard />

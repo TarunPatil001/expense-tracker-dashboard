@@ -19,6 +19,7 @@ import {
   deleteCategory,
   resetAllData
 } from '../store/expenseManagerSlice'
+import { scrollContainerToTop } from '../utils/scrollUtils'
 // Removed CategoryManager from Settings
 
 const Settings = ({ isOpen, onClose }) => {
@@ -158,7 +159,11 @@ const Settings = ({ isOpen, onClose }) => {
                 ].map(({ id, label, icon }) => (
                   <button
                     key={id}
-                    onClick={() => setActiveTab(id)}
+                    onClick={() => {
+                      setActiveTab(id)
+                      // Scroll to top when tab changes
+                      scrollContainerToTop('.overflow-y-auto')
+                    }}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors whitespace-nowrap text-sm ${
                       activeTab === id 
                         ? 'bg-blue-600 text-white' 
@@ -185,7 +190,11 @@ const Settings = ({ isOpen, onClose }) => {
               ].map(({ id, label, icon }) => (
                 <button
                   key={id}
-                  onClick={() => setActiveTab(id)}
+                  onClick={() => {
+                    setActiveTab(id)
+                    // Scroll to top when tab changes
+                    scrollContainerToTop('.overflow-y-auto')
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                     activeTab === id 
                       ? 'bg-blue-600 text-white' 

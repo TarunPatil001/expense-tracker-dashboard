@@ -14,12 +14,12 @@ import {
   ChevronRight
 } from 'lucide-react'
 
-const AIInsightsEngine = () => {
+const SmartInsightsEngine = () => {
   const { transactions = [], budget = {}, categories = [], preferences = {} } = useSelector(state => state.expenseManager || {})
   const [selectedInsight, setSelectedInsight] = useState(null)
 
-  // Advanced AI insights using machine learning-like analysis
-  const aiInsights = useMemo(() => {
+  // Advanced insights using statistical analysis
+  const smartInsights = useMemo(() => {
     const getCurrencySymbol = () => {
       switch (preferences?.currency) {
         case 'USD': return '$'
@@ -256,7 +256,7 @@ const AIInsightsEngine = () => {
           <Brain className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h3 className="text-white font-semibold">AI Insights Engine</h3>
+          <h3 className="text-white font-semibold text-base sm:text-lg">Smart Insights Engine</h3>
           <p className="text-gray-400 text-sm">Advanced behavioral analysis & predictions</p>
         </div>
         <div className="ml-auto flex items-center gap-2">
@@ -265,15 +265,15 @@ const AIInsightsEngine = () => {
         </div>
       </div>
 
-      {aiInsights.length === 0 ? (
+      {smartInsights.length === 0 ? (
         <div className="text-center py-8">
           <Brain className="w-12 h-12 text-gray-400 mx-auto mb-4" />
           <h4 className="text-white font-medium mb-2">Gathering Intelligence</h4>
-          <p className="text-gray-400 text-sm">Add more transactions for AI-powered insights</p>
+          <p className="text-gray-400 text-sm">Add more transactions for data-driven insights</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {aiInsights.slice(0, 5).map((insight, index) => {
+          {smartInsights.slice(0, 5).map((insight, index) => {
             const Icon = insight.icon
             const color = getInsightColor(insight.type)
             
@@ -303,7 +303,7 @@ const AIInsightsEngine = () => {
                       <div className={`mt-3 p-3 bg-${color}-500/10 rounded-lg border border-${color}-500/20`}>
                         <div className="flex items-center gap-2 mb-2">
                           <Target className={`w-4 h-4 text-${color}-400`} />
-                          <span className={`text-${color}-300 font-medium text-sm`}>AI Recommendation</span>
+                          <span className={`text-${color}-300 font-medium text-sm`}>Smart Recommendation</span>
                         </div>
                         <p className="text-gray-300 text-sm">{insight.recommendation}</p>
                       </div>
@@ -315,10 +315,10 @@ const AIInsightsEngine = () => {
             )
           })}
           
-          {aiInsights.length > 5 && (
+          {smartInsights.length > 5 && (
             <div className="text-center pt-4">
               <button className="text-purple-400 hover:text-purple-300 text-sm font-medium">
-                View {aiInsights.length - 5} more insights →
+                View {smartInsights.length - 5} more insights →
               </button>
             </div>
           )}
@@ -328,15 +328,15 @@ const AIInsightsEngine = () => {
       <div className="mt-6 p-4 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-xl">
         <div className="flex items-center gap-2 mb-2">
           <Zap className="w-4 h-4 text-yellow-400" />
-          <span className="text-white font-medium text-sm">AI Learning Progress</span>
+          <span className="text-white font-medium text-sm">Analytics Progress</span>
         </div>
         <p className="text-gray-300 text-sm">
-          The AI has analyzed {transactions.length} transactions across {categories.length} categories. 
-          Insight accuracy improves with more data and user feedback.
+          The system has analyzed {transactions.length} transactions across {categories.length} categories. 
+          Insight accuracy improves with more data and user behavior patterns.
         </p>
       </div>
     </div>
   )
 }
 
-export default AIInsightsEngine
+export default SmartInsightsEngine
